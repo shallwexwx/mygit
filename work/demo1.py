@@ -6,21 +6,23 @@ import pymysql
 
 
 class Monitoring:
-    def __init__(self, path_list):
-        self.path_list = path_list  # 传入一个文件夹路径
+    def __init__(self, path):
+        self.path = path  # 传入一个文件夹路径
 
-    # def __str__(self):
-    #     return self.path_list
+    def __str__(self):
+        return self.path
 
     def exist_create_dir(self):
-        for item in self.path_list:
-            try:
-                res = os.path.exists(item)
-            except Exception as e:
-                os.makedirs(item)
-                res = True
-                print(e)
-            return res
+        try:
+            os.path.exists(self.path)
+        except Exception as e:
+            os.makedirs(self.path)
+            print(e)
+
+    def has_new_file(self):
+        while 1:
+            path = self.path
+            pass
 
     @staticmethod
     def find_dir():
