@@ -1,4 +1,5 @@
 # coding=utf-8
+import json
 import os
 import sys
 
@@ -22,6 +23,9 @@ class Monitoring:
     def has_new_file(self):
         while 1:
             path = self.path
+            files = os.listdir(path)
+            for file_name in files:
+                f = str(path+file_name)
             pass
 
     @staticmethod
@@ -30,7 +34,21 @@ class Monitoring:
             res = os.getcwd()
             print(res)
         except Exception as e:
-            print('文件夹异常 %s' % e)
+            print(e)
+
+    def write(self):
+        try:
+            with open(self.path)as f:
+                res = '{' + f.read().split('{', 1)[1]
+                res = json.loads(res)
+                key_list = []
+                for key, value in res.items():
+                    print(key, ':', value)
+                    pass
+        except Exception as e1:
+            print(e1)
+        finally:
+            pass
 
 
 if __name__ == '__main__':
