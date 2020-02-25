@@ -1,9 +1,6 @@
 # coding=utf-8
 import json
 import os
-import sys
-
-import pymysql
 
 
 class Monitoring:
@@ -19,14 +16,6 @@ class Monitoring:
         except Exception as e:
             os.makedirs(self.path)
             print(e)
-
-    def has_new_file(self):
-        while 1:
-            path = self.path
-            files = os.listdir(path)
-            for file_name in files:
-                f = str(path+file_name)
-            pass
 
     @staticmethod
     def find_dir():
@@ -56,3 +45,8 @@ if __name__ == '__main__':
     m = Monitoring(file_path)
     print(m)
     m.find_dir()
+    while 1:
+        path = m.path
+        files = os.listdir(path)
+        for file_name in files:
+            f = str(path+file_name)
