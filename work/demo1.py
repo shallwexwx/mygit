@@ -1,6 +1,7 @@
 # coding=utf-8
 import json
 import os
+from time import sleep
 
 
 class Monitoring:
@@ -41,12 +42,20 @@ class Monitoring:
 
 
 if __name__ == '__main__':
-    file_path = [os.path.abspath(__file__)]
-    m = Monitoring(file_path)
-    print(m)
-    m.find_dir()
+    # file_path = os.path.abspath(__file__)
+
+    file_path = r'C:\Users\admin\Desktop\work\mygit\work'
+
+    mon1 = Monitoring(file_path)
+
+    # print(mon1)
+
     while 1:
-        path = m.path
-        files = os.listdir(path)
-        for file_name in files:
-            f = str(path+file_name)
+        files = os.listdir(mon1.path)
+        try:
+            for file_name in files:
+                f = str(mon1.path + file_name)
+                print f
+        except Exception as e1:
+            print e1
+        sleep(5)
