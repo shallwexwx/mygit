@@ -54,9 +54,11 @@ if __name__ == '__main__':
         try:
             files = os.listdir(mon1.path)
             for file_name in files:
-                f_name = str(mon1.path + file_name)
-                print f_name
-                with open(file_name, 'r') as f1:
+                f_name = str(mon1.path + '\\' + file_name)
+                # print(f_name)
+                # f_name.replace('\\', '/')
+                # print(f_name)
+                with open(f_name) as f1:
                     res4 = '{' + f1.read().split('{', 1)[1]
                     res4 = json.loads(res4)
                     # print(type(res))  # <class 'dict'>
@@ -66,8 +68,8 @@ if __name__ == '__main__':
                     sql1 = MySQL()
                     conn1 = sql1.create_con()
                     insert_data = sql1.add_data(key_dir)
-                print f_name
+                print(f_name)
                 break
         except Exception as e1:
-            print e1
+            print(e1)
         # sleep(5)

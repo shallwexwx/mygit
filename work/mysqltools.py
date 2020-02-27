@@ -66,18 +66,28 @@ class MySQL:
 
     def add_data(self, data):
         already = True
+        val1 = str(data["transaction"]).replace('"', '')
+        val2 = str(data["request"])
+        val3 = str(data["response"])
+        val4 = str(data["audit_data"])
+
+        print(val1)
+        print(val2)
+        print(val3)
+        print(val4)
+
         try:
             my_cursor = self.conn.cursor()
+            my_cursor.execute('use log_res;')
             insert_data = """
                 insert into data
-                ("transaction", "request", "response", "audit_data")
-                values
-                (%s, %s, %s, %s)
-            """ % (data["transaction"], data["request"],
-                   data["response"], data["audit_data"])
+                (transaction, request, response, audit_data)
+                values ("%s", "%s", "%s", "%s");
+            """ % (val1, val2, val3, val4)
+            print(insert_data)
             my_cursor.execute(insert_data)
         except Exception as e3:
-            print e3
+            print(e3)
             already = False
         return already
 
