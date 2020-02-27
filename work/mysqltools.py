@@ -77,7 +77,7 @@ class MySQL:
                    data["response"], data["audit_data"])
             my_cursor.execute(insert_data)
         except Exception as e3:
-            print e3
+            print(e3)
             already = False
         return already
 
