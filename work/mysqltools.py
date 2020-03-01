@@ -66,7 +66,7 @@ class MySQL:
 
     def add_data(self, data):
         already = True
-        val1 = str(data["transaction"]).replace('"', '')
+        val1 = str(data["transaction"])
         val2 = str(data["request"])
         val3 = str(data["response"])
         val4 = str(data["audit_data"])

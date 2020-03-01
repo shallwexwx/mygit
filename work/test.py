@@ -33,7 +33,8 @@ def connect_mysql():
 if __name__ == '__main__':
     # res = os.getcwd()
     # print(res)
-    with open(r'E:/lgo/test.log')as f:
+
+    with open(r'/Users/axin/Desktop/git_work/mygit/work/lgo/test.log')as f:
         res = '{' + f.read().split('{', 1)[1]
         res = json.loads(res)
         # print(type(res))  # <class 'dict'>
