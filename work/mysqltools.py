@@ -66,24 +66,48 @@ class MySQL:
 
     def add_data(self, data):
         already = True
-        val1 = str(data["transaction"])
-        val2 = str(data["request"])
-        val3 = str(data["response"])
-        val4 = str(data["audit_data"])
-
-        print(val1)
-        print(val2)
-        print(val3)
-        print(val4)
-
         try:
+            # 想用嵌套字典判断层数，然后自动生成表，失败
+            transaction_time = data["transaction"]["time"]
+            transaction_data = data["transaction"]["transaction_id"]
+            remote_address = data["transaction"]["remote_address"]
+            remote_port = data["transaction"]["remote_port"]
+            local_address = data["transaction"]["local_address"]
+            local_port = data["transaction"]["local_port"]
+            audit_data = data["audit_data"]
+
+            request_line = data["request"]["request_line"]
+            request_headers_host = data["request"]["headers"]["Host"]
+            request_headers_agent = data["request"]["headers"]["User-Agent"]
+            request_headers_accept = data["request"]["headers"]["Host"]
+            request_headers_cont_len = data["request"]["headers"]["Content-Length"]
+            request_headers_cont_type = data["request"]["headers"]["Content-Type"]
+            request_body = data["request"]["body"]
+
+            response_protocol = data["response"]["protocol"]
+            response_status = data["response"]["status"]
+            response_headers_last_modified = data["response"]["headers"]["Last-Modified"]
+            response_headers_tag = data["response"]["headers"]["ETag"]
+            response_headers_accept_ranges = data["response"]["headers"]["Accept-Ranges"]
+            response_headers_cont_len = data["response"]["headers"]["Content-Length"]
+            response_headers_cont_type = data["response"]["headers"]["Content-Type"]
+            response_body = data["response"]["body"]
+
             my_cursor = self.conn.cursor()
             my_cursor.execute('use log_res;')
             insert_data = """
-                insert into data
-                (transaction, request, response, audit_data)
-                values ("%s", "%s", "%s", "%s");
-            """ % (val1, val2, val3, val4)
+                insert into transaction
+                (time, remote_address, remote_port, local_address, local_port, audit_data, transaction_data)
+                values ("%s", "%s", "%s", "%s", "%s", "%s", "%s");
+            """ % (transaction_time, remote_address, remote_port, local_address,
+                   local_port, audit_data, transaction_data)
+
+            select_id = """
+                select transaction_id 
+                from transaction
+                where transaction_data=%s
+            """ % (transaction_data,)
+
             print(insert_data)
             my_cursor.execute(insert_data)
         except Exception as e3:
